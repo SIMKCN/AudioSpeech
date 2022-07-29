@@ -33,32 +33,32 @@ def get_large_audio_transcription(path):
     # create a directory to store the audio chunks
     if not os.path.isdir(folder_name):
         os.mkdir(folder_name)
-    whole_text = ""
+        whole_text = ""
     # process each chunk
-    for i, audio_chunk in enumerate(chunks, start=1):
-        # export audio chunk and save it in
-        # the `folder_name` directory
-        chunk_filename = os.path.join(folder_name, f"chunk{i}.wav")
-        audio_chunk.export(chunk_filename, format="wav")
-        # recognize the chunk
-        with sr.AudioFile(chunk_filename) as source:
-            audio_listened = r.record(source)
-            # try converting it to text
-            try: 
-                text = r.recognize_google(audio_listened, language="de-DE")
-            except sr.UnknownValueError as e:
-                print("Error:", str(e))
-            else:
-                text = f"{text.capitalize()}. "
-                print(chunk_filename, ":", text)
-                whole_text += text
-                nonsens = " "
-                datei = open("Transscript.txt", "a")
-                datei.write("\r\n" + chunk_filename + nonsens + text)
-                datei.close()
-                exit_code = subprocess.call("./Finish.sh")
-                print(exit_code)
-                return whole_text
+        for i, audio_chunk in enumerate(chunks, start=1):
+            # export audio chunk and save it in
+            # the `folder_name` directory
+            chunk_filename = os.path.join(folder_name, f"chunk{i}.wav")
+            audio_chunk.export(chunk_filename, format="wav")
+            # recognize the chunk
+            with sr.AudioFile(chunk_filename) as source:
+                audio_listened = r.record(source)
+                # try converting it to text
+                try: 
+                    text = r.recognize_google(audio_listened, language="de-DE")
+                except sr.UnknownValueError as e:
+                    print("Error:", str(e))
+                else:
+                    text = f"{text.capitalize()}. "
+                    print(chunk_filename, ":", text)
+                    whole_text += text
+                    nonsens = " "
+                    datei = open("Transscript.txt", "a")
+                    datei.write("\r\n" + chunk_filename + nonsens + text)
+                    datei.close()
+        exit_code = subprocess.call("./Finish.sh")
+        print(exit_code)
+        return whole_text
 
     # return the text for all chunks detected
         
@@ -67,13 +67,13 @@ def get_large_audio_transcription(path):
 # def datei soll loadbar aufrufen welche am Ende des Aktion gestoppt werden soll
 
 def datei():
-    try:
-        filename = askopenfilename()
-        get_large_audio_transcription(filename)
-    except FileNotFoundError:
-        print("Error")
-    except AttributeError:
-        print("Error2")
+    
+    filename = askopenfilename()
+    get_large_audio_transcription(filename)
+    #except FileNotFoundError:
+        #print("Error")
+    #except AttributeError:
+        #print("Error2")
 def anleitung():
     root2 = Tk()
     root2.geometry("600x200")
