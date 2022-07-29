@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 from tkinter import *
 from tkinter.filedialog import askopenfilename
 import speech_recognition as sr
@@ -58,16 +59,21 @@ def get_large_audio_transcription(path):
                 exit_code = subprocess.call("./Finish.sh")
                 print(exit_code)
                 return whole_text
+
     # return the text for all chunks detected
         
         
     
-
+# def datei soll loadbar aufrufen welche am Ende des Aktion gestoppt werden soll
 
 def datei():
-    filename = askopenfilename()
-    get_large_audio_transcription(filename)
-
+    try:
+        filename = askopenfilename()
+        get_large_audio_transcription(filename)
+    except FileNotFoundError:
+        print("Error")
+    except AttributeError:
+        print("Error2")
 def anleitung():
     root2 = Tk()
     root2.geometry("600x200")
