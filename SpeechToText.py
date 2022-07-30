@@ -3,6 +3,7 @@
 
 from tkinter import *
 from tkinter.filedialog import askopenfilename
+from tkinter.ttk import Progressbar
 import speech_recognition as sr
 from pathlib import Path
 import os
@@ -57,8 +58,10 @@ def get_large_audio_transcription(path):
                     datei.write("\r\n" + chunk_filename + nonsens + text)
                     datei.close()
         exit_code = subprocess.call("./Finish.sh")
+        pb.stop()
         print(exit_code)
         return whole_text
+
 
     # return the text for all chunks detected
         
@@ -67,13 +70,14 @@ def get_large_audio_transcription(path):
 # def datei soll loadbar aufrufen welche am Ende des Aktion gestoppt werden soll
 
 def datei():
-    
-    filename = askopenfilename()
-    get_large_audio_transcription(filename)
-    #except FileNotFoundError:
-        #print("Error")
-    #except AttributeError:
-        #print("Error2")
+    try:
+        filename = askopenfilename()
+        get_large_audio_transcription(filename)
+        pb.start()
+    except FileNotFoundError:
+        print("Error")
+    except AttributeError:
+        print("Error2")
 def anleitung():
     root2 = Tk()
     root2.geometry("600x200")
@@ -110,13 +114,17 @@ def close():
 
 root = Tk()
 root.title("PYTranscriptor")
-root.geometry("200x200")
+root.geometry("400x200")
+global pb
+pb = Progressbar(root, orient='horizontal', mode='indeterminate', length=280)
+
 anleitungb = Button(root, text="Anleitung", command=anleitung)
 close = Button(root, text="Close", command=close)
 l1 = Label(root, text="Audio Datei:")
 b1 = Button(root, text="Öffnen", command=datei)
 b1.grid(row=1, column=2, pady=10)
 l1.grid(row=1, column=1, padx=10)
+pb.grid(row=3, column=1, padx=10, pady=10)
 close.grid(row=2, column=2)
 anleitungb.grid(row=2, column=1)
 root.mainloop()
