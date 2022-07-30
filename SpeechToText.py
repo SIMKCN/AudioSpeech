@@ -62,18 +62,25 @@ def get_large_audio_transcription(path):
         print(exit_code)
         return whole_text
 
-
     # return the text for all chunks detected
         
         
     
 # def datei soll loadbar aufrufen welche am Ende des Aktion gestoppt werden soll
-
+global pb
+def loadingbar():
+    lb = Tk()
+    lb.title("Loading....")
+    
+    pb = Progressbar(lb, orient='horizontal', mode='indeterminate', length=280)
+    pb.grid(row=1, column=1, padx=10, pady=10)
+    pb.start()
+    lb.mainloop()
 def datei():
     filename = askopenfilename()
     get_large_audio_transcription(filename)
     #pb.start()
-
+    
 def anleitung():
     root2 = Tk()
     root2.geometry("600x200")
@@ -120,7 +127,7 @@ l1 = Label(root, text="Audio Datei:")
 b1 = Button(root, text="Öffnen", command=datei)
 b1.grid(row=1, column=2, pady=10)
 l1.grid(row=1, column=1, padx=10)
-pb.grid(row=3, column=1, padx=10, pady=10)
+#pb.grid(row=3, column=1, padx=10, pady=10)
 close.grid(row=2, column=2)
 anleitungb.grid(row=2, column=1)
 root.mainloop()
