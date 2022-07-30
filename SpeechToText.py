@@ -58,7 +58,7 @@ def get_large_audio_transcription(path):
                     datei.write("\r\n" + chunk_filename + nonsens + text)
                     datei.close()
         exit_code = subprocess.call("./Finish.sh")
-        pb.stop()
+        #pb.stop()
         print(exit_code)
         return whole_text
 
@@ -70,14 +70,10 @@ def get_large_audio_transcription(path):
 # def datei soll loadbar aufrufen welche am Ende des Aktion gestoppt werden soll
 
 def datei():
-    try:
-        filename = askopenfilename()
-        get_large_audio_transcription(filename)
-        pb.start()
-    except FileNotFoundError:
-        print("Error")
-    except AttributeError:
-        print("Error2")
+    filename = askopenfilename()
+    get_large_audio_transcription(filename)
+    #pb.start()
+
 def anleitung():
     root2 = Tk()
     root2.geometry("600x200")
@@ -115,8 +111,8 @@ def close():
 root = Tk()
 root.title("PYTranscriptor")
 root.geometry("400x200")
-global pb
-pb = Progressbar(root, orient='horizontal', mode='indeterminate', length=280)
+#global pb
+#pb = Progressbar(root, orient='horizontal', mode='indeterminate', length=280)
 
 anleitungb = Button(root, text="Anleitung", command=anleitung)
 close = Button(root, text="Close", command=close)
