@@ -125,7 +125,7 @@ def close():
 
 root = Tk()
 root.title("PYTranscriptor")
-root.geometry("400x200")
+root.geometry("200x100")
 #global pb
 #pb = Progressbar(root, orient='horizontal', mode='indeterminate', length=280)
 
