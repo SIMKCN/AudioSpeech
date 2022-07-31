@@ -66,16 +66,17 @@ def get_large_audio_transcription(path):
 
     root3 = Tk()
     root3.title("Loading...")
+    root3.geometry("200x100")
     """
     Splitting the large audio file into chunks
     and apply speech recognition on each of these chunks
     """
     # open the audio file using pydub
     
-    pb = Progressbar(root3, orient=HORIZONTAL, length=100, mode='determinate')
+    pb = Progressbar(root3, orient=HORIZONTAL, length=200, mode='determinate')
     startb = Button(root3, text="Start", command=start)
     pb.grid(row=1, column=1)
-    startb.grid(row=2, column=12)
+    startb.grid(row=2, column=1)
     root3.mainloop()
 
     # return the text for all chunks detected
@@ -136,10 +137,10 @@ root.geometry("200x100")
 #global pb
 #pb = Progressbar(root, orient='horizontal', mode='indeterminate', length=280)
 
-anleitungb = Button(root, text="Anleitung", command=anleitung)
-close = Button(root, text="Close", command=close)
-l1 = Label(root, text="Audio Datei:")
-b1 = Button(root, text="Öffnen", command=datei)
+anleitungb = Button(root, text="Anleitung", command=anleitung, fg='#b0d597')
+close = Button(root, text="Close", command=close, fg='#b0d597')
+l1 = Label(root, text="Audio Datei:", fg='#b0d597')
+b1 = Button(root, text="Öffnen", command=datei, fg='#b0d597')
 b1.grid(row=1, column=2, pady=10)
 l1.grid(row=1, column=1, padx=10)
 #pb.grid(row=3, column=1, padx=10, pady=10)
