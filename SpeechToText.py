@@ -91,7 +91,7 @@ def datei():
     
 def anleitung():
     root2 = Tk()
-    root2.geometry("600x200")
+    root2.geometry("700x600")
     root2.title("Anleitung")
     frame = Frame(root2)
     frame.pack()
@@ -117,7 +117,10 @@ def anleitung():
     lb.insert(10, "11.Zusätzlich wird der Text in der Datei ""Transscript.txt"" gespeichert welche auch im Ordner des Programms gespeichert wird.")
     lb.insert(11, "12.Begriffserklärung:")
     lb.insert(12, "Error:Eine Stelle wo keine Sprache erkannt worden ist. (Kann bei langem Atmen o.ä auftreten)")
- 
+    lb.insert(13, "-------------------------------------------------------------------")
+    lb.insert(14, "1. Schritt /-/ Drücken sie öffnen und wählen sie die Wav Datei aus!")
+    lb.insert(15, "2. Ein Fenster öffnet sich mit einem Ladebalken und dem Knopf 'Start'. Drücken sie diesen!")
+    lb.insert(16, "Nun fängst das Programm an die Datei in Text um zuschreiben.")
     root2.mainloop()
 
 def close():
