@@ -13,72 +13,80 @@ import subprocess
 # create a speech recognition object
 r = sr.Recognizer()
 
-# a function that splits the audio file into chunks
-# and applies speech recognition
+
 def get_large_audio_transcription(path):
+    def start():
+        sound = AudioSegment.from_wav(path)
+        # split audio sound where silence is 700 miliseconds or more and get chunks
+        chunks = split_on_silence(sound,
+
+            # adjust this per requirement
+            silence_thresh = sound.dBFS-14,
+            # keep the silence for 1 second, adjustable as well
+            keep_silence=500,
+        )
+        folder_name = "audio-chunks"
+        # create a directory to store the audio chunks
+        if not os.path.isdir(folder_name):
+            os.mkdir(folder_name)
+            whole_text = ""
+        # process each chunk
+            for i, audio_chunk in enumerate(chunks, start=1):
+                # export audio chunk and save it in
+                # the `folder_name` directory
+                chunk_filename = os.path.join(folder_name, f"chunk{i}.wav")
+                audio_chunk.export(chunk_filename, format="wav")
+                # recognize the chunk
+                with sr.AudioFile(chunk_filename) as source:
+                    audio_listened = r.record(source)
+                    # try converting it to text
+                    try: 
+                        text = r.recognize_google(audio_listened, language="de-DE")
+                    except sr.UnknownValueError as e:
+                        print("Error:", str(e))
+                    else:
+                        text = f"{text.capitalize()}. "
+                        print(chunk_filename, ":", text)
+                        whole_text += text
+                        nonsens = " "
+                        datei = open("Transscript.txt", "a")
+                        datei.write("\r\n" + chunk_filename + nonsens + text)
+                        datei.close()
+                root3.update_idletasks()
+                pb['value'] += 4
+            exit_code = subprocess.call("./Finish.sh")
+        
+        
+            print(exit_code)
+            return whole_text
+                
+    root3 = Tk()
+    root3.title("Loading...")
     """
     Splitting the large audio file into chunks
     and apply speech recognition on each of these chunks
     """
     # open the audio file using pydub
-    sound = AudioSegment.from_wav(path)
-    # split audio sound where silence is 700 miliseconds or more and get chunks
-    chunks = split_on_silence(sound,
 
-        # adjust this per requirement
-        silence_thresh = sound.dBFS-14,
-        # keep the silence for 1 second, adjustable as well
-        keep_silence=500,
-    )
-    folder_name = "audio-chunks"
-    # create a directory to store the audio chunks
-    if not os.path.isdir(folder_name):
-        os.mkdir(folder_name)
-        whole_text = ""
-    # process each chunk
-        for i, audio_chunk in enumerate(chunks, start=1):
-            # export audio chunk and save it in
-            # the `folder_name` directory
-            chunk_filename = os.path.join(folder_name, f"chunk{i}.wav")
-            audio_chunk.export(chunk_filename, format="wav")
-            # recognize the chunk
-            with sr.AudioFile(chunk_filename) as source:
-                audio_listened = r.record(source)
-                # try converting it to text
-                try: 
-                    text = r.recognize_google(audio_listened, language="de-DE")
-                except sr.UnknownValueError as e:
-                    print("Error:", str(e))
-                else:
-                    text = f"{text.capitalize()}. "
-                    print(chunk_filename, ":", text)
-                    whole_text += text
-                    nonsens = " "
-                    datei = open("Transscript.txt", "a")
-                    datei.write("\r\n" + chunk_filename + nonsens + text)
-                    datei.close()
-        exit_code = subprocess.call("./Finish.sh")
-        #pb.stop()
-        print(exit_code)
-        return whole_text
+    pb = Progressbar(root3, orient=HORIZONTAL, length=400, mode='determinate')
+    startb = Button(root3, text="Start", command=start)
+    pb.grid(row=1, column=1)
+    startb.grid(row=2, column=12)
+    root3.mainloop()
 
     # return the text for all chunks detected
         
         
     
 # def datei soll loadbar aufrufen welche am Ende des Aktion gestoppt werden soll
-global pb
-def loadingbar():
-    lb = Tk()
-    lb.title("Loading....")
-    
-    pb = Progressbar(lb, orient='horizontal', mode='indeterminate', length=280)
-    pb.grid(row=1, column=1, padx=10, pady=10)
-    pb.start()
-    lb.mainloop()
 def datei():
     filename = askopenfilename()
     get_large_audio_transcription(filename)
+
+    
+    
+    
+    
     #pb.start()
     
 def anleitung():
