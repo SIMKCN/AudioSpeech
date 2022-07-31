@@ -16,6 +16,7 @@ r = sr.Recognizer()
 
 def get_large_audio_transcription(path):
     def start():
+        a = 0
         sound = AudioSegment.from_wav(path)
         # split audio sound where silence is 700 miliseconds or more and get chunks
         chunks = split_on_silence(sound,
@@ -25,6 +26,11 @@ def get_large_audio_transcription(path):
             # keep the silence for 1 second, adjustable as well
             keep_silence=500,
         )
+        
+        
+        for i in chunks:
+            a += 1
+        lengthi = 100/a
         folder_name = "audio-chunks"
         # create a directory to store the audio chunks
         if not os.path.isdir(folder_name):
@@ -53,13 +59,11 @@ def get_large_audio_transcription(path):
                         datei.write("\r\n" + chunk_filename + nonsens + text)
                         datei.close()
                 root3.update_idletasks()
-                pb['value'] += 4
-            exit_code = subprocess.call("./Finish.sh")
-        
-        
-            print(exit_code)
-            return whole_text
                 
+                pb['value'] += lengthi
+        exit_code = subprocess.call("./Finish.sh")
+            
+
     root3 = Tk()
     root3.title("Loading...")
     """
@@ -67,8 +71,8 @@ def get_large_audio_transcription(path):
     and apply speech recognition on each of these chunks
     """
     # open the audio file using pydub
-
-    pb = Progressbar(root3, orient=HORIZONTAL, length=400, mode='determinate')
+    
+    pb = Progressbar(root3, orient=HORIZONTAL, length=100, mode='determinate')
     startb = Button(root3, text="Start", command=start)
     pb.grid(row=1, column=1)
     startb.grid(row=2, column=12)
