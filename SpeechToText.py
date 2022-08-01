@@ -10,10 +10,11 @@ import os
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
 import subprocess
+import logging
+logging.basicConfig(filename="SpeechToLog.log", filemode='w', format='%(asctime)s - %(message)s', level=logging.INFO)
 # create a speech recognition object
 r = sr.Recognizer()
-
-
+logging.info("create a speech recogniton object")
 def get_large_audio_transcription(path):
     def start():
         a = 0
@@ -26,7 +27,7 @@ def get_large_audio_transcription(path):
             # keep the silence for 1 second, adjustable as well
             keep_silence=500,
         )
-        
+        logging.info("Splited Audio in Chunks")
         
         for i in chunks:
             a += 1
@@ -35,6 +36,7 @@ def get_large_audio_transcription(path):
         # create a directory to store the audio chunks
         if not os.path.isdir(folder_name):
             os.mkdir(folder_name)
+            logging.info("Created Folder for Chunks")
             whole_text = ""
         # process each chunk
             for i, audio_chunk in enumerate(chunks, start=1):
@@ -42,27 +44,33 @@ def get_large_audio_transcription(path):
                 # the `folder_name` directory
                 chunk_filename = os.path.join(folder_name, f"chunk{i}.wav")
                 audio_chunk.export(chunk_filename, format="wav")
+                logging.info("Exported Chunk ")
                 # recognize the chunk
                 with sr.AudioFile(chunk_filename) as source:
                     audio_listened = r.record(source)
                     # try converting it to text
+                    logging.info("Recognized the Chunk")
                     try: 
                         text = r.recognize_google(audio_listened, language="de-DE")
+                        logging.info("Recognized it with Google")
                     except sr.UnknownValueError as e:
                         print("Error:", str(e))
+                        logging.warning("The chunk could not be rewritten - Chunk is empty ")
                     else:
                         text = f"{text.capitalize()}. "
                         print(chunk_filename, ":", text)
+                        logging.info("Printed chunk text")
                         whole_text += text
                         nonsens = " "
                         datei = open("Transscript.txt", "a")
                         datei.write("\r\n" + chunk_filename + nonsens + text)
                         datei.close()
+                        logging.info("wrote Transcript")
                 root3.update_idletasks()
-                
                 pb['value'] += lengthi
+                logging.info("Updated Progressbar")
         exit_code = subprocess.call("./Finish.sh")
-            
+        logging.info("Called ./Finish.sh")
 
     root3 = Tk()
     root3.title("Loading...")
@@ -86,8 +94,8 @@ def get_large_audio_transcription(path):
 # def datei soll loadbar aufrufen welche am Ende des Aktion gestoppt werden soll
 def datei():
     filename = askopenfilename()
+    logging.info("asked for filename")
     get_large_audio_transcription(filename)
-
     
     
     
@@ -95,6 +103,7 @@ def datei():
     #pb.start()
     
 def anleitung():
+    logging.info("Opened anleitung()")
     root2 = Tk()
     root2.geometry("700x600")
     root2.title("Anleitung")
@@ -131,6 +140,7 @@ def anleitung():
 def close():
     root.quit()
 
+logging.info("User logged in")
 root = Tk()
 root.title("PYTranscriptor")
 root.geometry("200x100")
