@@ -11,6 +11,9 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence
 import subprocess
 import logging
+import shutil
+
+
 logging.basicConfig(filename="SpeechToLog.log", filemode='w', format='%(asctime)s - %(message)s', level=logging.INFO)
 # create a speech recognition object
 r = sr.Recognizer()
@@ -98,7 +101,7 @@ def datei():
     get_large_audio_transcription(filename)
     
     
-    
+
     
     #pb.start()
     
@@ -138,9 +141,11 @@ def anleitung():
     root2.mainloop()
 
 def close():
+
     root.quit()
 
 logging.info("User logged in")
+
 root = Tk()
 root.title("PYTranscriptor")
 root.geometry("200x100")
