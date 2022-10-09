@@ -12,9 +12,11 @@ from pydub.silence import split_on_silence
 import subprocess
 import logging
 import shutil
-global get_large_audio_transcription
-global r
+
+
 class Audio:
+    global get_large_audio_transcription
+    global r
     logging.basicConfig(filename="SpeechToLog.log", filemode='w', format='%(asctime)s - %(message)s', level=logging.INFO)
     # create a speech recognition object
     r = sr.Recognizer()
@@ -73,7 +75,7 @@ class Audio:
                     root3.update_idletasks()
                     pb['value'] += lengthi
                     logging.info("Updated Progressbar")
-            exit_code = subprocess.call("./Finish.sh")
+            exit_code = subprocess.call("Finish.sh")
             logging.info("Called ./Finish.sh")
 
         root3 = Tk()
