@@ -75,7 +75,7 @@ class Audio:
                     root3.update_idletasks()
                     pb['value'] += lengthi
                     logging.info("Updated Progressbar")
-            exit_code = subprocess.call("Finish.sh")
+            exit_code = subprocess.call("./Finish.sh")
             logging.info("Called ./Finish.sh")
 
         root3 = Tk()
