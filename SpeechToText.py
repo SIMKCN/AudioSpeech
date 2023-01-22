@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-from tkinter import *
+import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from tkinter.ttk import Progressbar
 import speech_recognition as sr
@@ -78,7 +78,7 @@ class Audio:
             exit_code = subprocess.call("./Finish.sh")
             logging.info("Called ./Finish.sh")
 
-        root3 = Tk()
+        root3 = tk.Tk()
         root3.title("Loading...")
         root3.geometry("200x100")
         """
@@ -87,8 +87,8 @@ class Audio:
         """
         # open the audio file using pydub
         
-        pb = Progressbar(root3, orient=HORIZONTAL, length=200, mode='determinate')
-        startb = Button(root3, text="Start", command=start)
+        pb = Progressbar(root3, orient=tk.HORIZONTAL, length=200, mode='determinate')
+        startb = tk.Button(root3, text="Start", command=start)
         pb.grid(row=1, column=1)
         startb.grid(row=2, column=1)
         root3.mainloop()
@@ -112,15 +112,15 @@ class UI:
         
     def anleitung():
         logging.info("Opened anleitung()")
-        root2 = Tk()
+        root2 = tk.Tk()
         root2.geometry("700x600")
         root2.title("Anleitung")
-        frame = Frame(root2)
+        frame = tk.Frame(root2)
         frame.pack()
         
-        sb = Scrollbar(frame, orient=HORIZONTAL)
+        sb = tk.Scrollbar(frame, orient=HORIZONTAL)
         sb.pack(fill=X)
-        lb = Listbox(frame, width=580, height=180, xscrollcommand=sb.set)
+        lb = tk.Listbox(frame, width=580, height=180, xscrollcommand=sb.set)
         lb.pack()
 
         lb.configure(xscrollcommand=sb.set)
@@ -151,16 +151,13 @@ class UI:
 
     logging.info("User logged in")
 
-    root = Tk()
+    root = tk.Tk()
     root.title("PYTranscriptor")
     root.geometry("200x100")
-    #global pb
-    #pb = Progressbar(root, orient='horizontal', mode='indeterminate', length=280)
-
-    anleitungb = Button(root, text="Anleitung", command=anleitung, fg='#b0d597')
-    close = Button(root, text="Close", command=close, fg='#b0d597')
-    l1 = Label(root, text="Audio Datei:", fg='#b0d597')
-    b1 = Button(root, text="Öffnen", command=datei, fg='#b0d597')
+    anleitungb = tk.Button(root, text="Anleitung", command=anleitung, fg='#b0d597')
+    close = tk.Button(root, text="Close", command=close, fg='#b0d597')
+    l1 = tk.Label(root, text="Audio Datei:", fg='#b0d597')
+    b1 = tk.Button(root, text="Öffnen", command=datei, fg='#b0d597')
     b1.grid(row=1, column=2, pady=10)
     l1.grid(row=1, column=1, padx=10)
     #pb.grid(row=3, column=1, padx=10, pady=10)
