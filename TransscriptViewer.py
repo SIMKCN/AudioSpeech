@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
-import os
-from pygame import mixer
 import csv
 def datei():
     global text1
