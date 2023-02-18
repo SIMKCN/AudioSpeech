@@ -62,7 +62,7 @@ class Audio:
                             print(chunk_filename, ":", text)
                             whole_text += text
                             nonsens = " "
-                            datei = open("Transscript.txt", "a")
+                            datei = open("Transscript.csv", "a")
                             datei.write("\r\n" + chunk_filename + nonsens + text)
                             datei.close()
                     root3.update_idletasks()
