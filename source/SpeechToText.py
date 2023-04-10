@@ -105,39 +105,7 @@ class UI:
         
         #pb.start()
         
-    def anleitung():
-        root2 = tk.Tk()
-        root2.geometry("700x600")
-        root2.title("Anleitung")
-        frame = tk.Frame(root2)
-        frame.pack()
-        
-        sb = tk.Scrollbar(frame, orient="horizontal")
-        sb.pack(fill="x")
-        lb = tk.Listbox(frame, width=580, height=180, xscrollcommand=sb.set)
-        lb.pack()
-
-        lb.configure(xscrollcommand=sb.set)
-        sb.config(command=lb.xview)
-        
-        lb.insert(0, "1.Anleitung")
-        lb.insert(1, "2.Vorinformationen")
-        lb.insert(2, "3.Achtung! Das Programm funktioniert nur mit .wav Datein!!!")
-        lb.insert(3, "4.Sollten Sie andere Audio Formate nutzen könnte es zu Problemen kommen.")
-        lb.insert(4, "")
-        lb.insert(5, "6.Der Transcripter arbeitet nicht 100% perfekt und hat Probleme mit Dialekten.")
-        lb.insert(6, "7.Er kann nicht zwischen Stimmen unterscheiden.")
-        lb.insert(7, "8.Nach Nutzung sollte der Text nochmal korrigiert werden.")
-        lb.insert(8, "9.Dazu werden während des transkribieren Audio Chunks erstellt, jeweils versähen mit dem Namen des Chunks.")
-        lb.insert(9, "10.Diese Chunks werden im selben Ordner in der sich auch das Programm befindet gespeichert.")
-        lb.insert(10, "11.Zusätzlich wird der Text in der Datei ""Transscript.txt"" gespeichert, welche auch im Ordner des Programms gespeichert wird.")
-        lb.insert(11, "12.Begriffserklärung:")
-        lb.insert(12, "Error:Eine Stelle wo keine Sprache erkannt worden ist. (Kann bei langem Atmen o.ä auftreten)")
-        lb.insert(13, "-------------------------------------------------------------------")
-        lb.insert(14, "1. Schritt /-/ Drücken Sie (Öffnen) und wählen sie die Wav Datei aus!")
-        lb.insert(15, "2. Ein Fenster öffnet sich mit einem Ladebalken und dem Knopf 'Start'. Drücken sie diesen!")
-        lb.insert(16, "Nun fängst das Programm an die Datei in Text um zuschreiben.")
-        root2.mainloop()
+#
 
     def close():
         try:
@@ -147,13 +115,13 @@ class UI:
     root = tk.Tk()
     root.title("PYTranscriptor")
     root.geometry("200x100")
-    anleitungb = tk.Button(root, text="Anleitung", command=anleitung, fg='#000000')
+
     close = tk.Button(root, text="Close", command=close, fg='#000000')
-    l1 = tk.Label(root, text="Audio Datei:", fg='#000000')
-    b1 = tk.Button(root, text="Öffnen", command=datei, fg='#000000')
+    l1 = tk.Label(root, text="Audio File:", fg='#000000')
+    b1 = tk.Button(root, text="Open", command=datei, fg='#000000')
     b1.grid(row=1, column=2, pady=10)
     l1.grid(row=1, column=1, padx=10)
     #pb.grid(row=3, column=1, padx=10, pady=10)
     close.grid(row=2, column=2)
-    anleitungb.grid(row=2, column=1)
+
     root.mainloop()
